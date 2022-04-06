@@ -9,7 +9,7 @@
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" class="form-control" v-model="student.email" required>
+                    <input type="email" class="form-control" v-model="student.email" required>
                 </div>
                 <div class="form-group">
                     <label>Phone</label>
@@ -23,18 +23,32 @@
     </div>
 </template>
 <script>
+    import axios from "axios";
     export default {
         data() {
             return {
                 student: {
-                    name: '',
-                    email: '',
-                    phone: ''
+                   name: '',
+                   email: '',
+                   phone: ''
                 }
             }
         },
         methods: {
-            handleSubmitForm() { }
+            handleSubmitForm() {
+                let apiURL = 'http://localhost:8080';
+                
+                axios.post(apiURL, this.student).then(() => {
+                  this.$router.push('/view')
+                  this.student = {
+                    name: '',
+                    email: '',
+                    phone: ''
+                  }
+                }).catch(error => {
+                    console.log(error)
+                });
+            }
         }
     }
 </script>
