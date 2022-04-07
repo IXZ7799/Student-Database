@@ -5,6 +5,8 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Name</th>
+                        <th>Surname</th>
+                        <th>DOB</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Actions</th>
@@ -13,6 +15,8 @@
                 <tbody>
                     <tr v-for="student in Students" :key="student._id">
                         <td>{{ student.name }}</td>
+                        <td>{{ student.surname }}</td>
+                        <td>{{ student.dob }}</td>
                         <td>{{ student.email }}</td>
                         <td>{{ student.phone }}</td>
                         <td>

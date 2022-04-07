@@ -8,6 +8,14 @@
                     <input type="text" class="form-control" v-model="student.name" required>
                 </div>
                 <div class="form-group">
+                    <label>Surname</label>
+                    <input type="text" class="form-control" v-model="student.surname" required>
+                </div>
+                <div class="form-group">
+                    <label>DOB</label>
+                    <input type="date" class="form-control" v-model="student.dob" required>
+                </div>
+                <div class="form-group">
                     <label>Email</label>
                     <input type="email" class="form-control" v-model="student.email" required>
                 </div>

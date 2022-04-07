@@ -4,6 +4,12 @@ let studentSchema = new Schema({
   name: {
     type: String
   },
+  surname: {
+    type: String
+  },
+  dob: {
+    type: Date
+  },
   email: {
     type: String
   },
