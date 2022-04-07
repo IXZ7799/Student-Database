@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // Connect mongoDB
 mongoose
-    .connect('mongodb+srv://Zobaiya:Pomezia11@cluster0.jyd2p.mongodb.net/test')
+    .connect('mongodb+srv://Zobaiya:Pomezia11@cluster0.jyd2p.mongodb.net/Zobaiya')
     .then((x) => {
         console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
     })
@@ -23,14 +23,14 @@ app.use(cors())
 // API
 app.use('/api', studentAPI)
 // Create port
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 4000
 const server = app.listen(port, () => {
     console.log('Connected to port ' + port)
 })
 // Find 404
-app.use((req, res, next) => {
-    next(createError(404))
-})
+// app.use((req, res, next) => {
+//    next(createError(404))
+//})
 // error handler
 app.use(function (err, req, res, next) {
     console.error(err.message)
