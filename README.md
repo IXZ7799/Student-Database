@@ -1,4 +1,4 @@
-# my-project
+# Student Database
 
 ## Project setup
 ```
