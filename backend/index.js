@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // Connect mongoDB
 mongoose
-    .connect('mongodb+srv://Zobaiya:Pomezia11@cluster0.jyd2p.mongodb.net/Zobaiya')
+    .connect(process.env.MONGODB_URI)
     .then((x) => {
         console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
     })
