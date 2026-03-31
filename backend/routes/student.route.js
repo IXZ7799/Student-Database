@@ -39,8 +39,22 @@ studentRoute.route('/edit-student/:id').get((req, res, next) => {
 })
 // Update
 studentRoute.route('/update-student/:id').put((req, res, next) => {
+  // Only allow specific fields to be updated to prevent injection of MongoDB operators
+  const allowedUpdateFields = ['name', 'email', 'age']; // adjust this list to match Student schema
+  const updateData = {};
+
+  allowedUpdateFields.forEach((field) => {
+    if (Object.prototype.hasOwnProperty.call(req.body, field)) {
+      updateData[field] = req.body[field];
+    }
+  });
+
+  if (Object.keys(updateData).length === 0) {
+    return res.status(400).json({ message: 'No valid fields provided for update.' });
+  }
+
   StudentModel.findByIdAndUpdate(req.params.id, {
-    $set: req.body
+    $set: updateData
   }, (error, data) => {
     if (error) {
       return next(error);
