@@ -8,6 +8,11 @@ const deleteStudentLimiter = RateLimit({
   max: 100, // limit each IP to 100 delete requests per windowMs
 });
 
+const listStudentsLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 500, // limit each IP to 500 list requests per windowMs
+});
+
 // model
 let StudentModel = require('../models/Student');
 studentRoute.route('/create-student').post((req, res, next) => {
@@ -19,7 +24,7 @@ studentRoute.route('/create-student').post((req, res, next) => {
   }
 })
 });
-studentRoute.route('/').get((req, res, next) => {
+studentRoute.route('/').get(listStudentsLimiter, (req, res, next) => {
     StudentModel.find((error, data) => {
      if (error) {
        return next(error)
