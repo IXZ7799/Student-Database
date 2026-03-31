@@ -13,6 +13,11 @@ const listStudentsLimiter = RateLimit({
   max: 500, // limit each IP to 500 list requests per windowMs
 });
 
+const updateStudentLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200, // limit each IP to 200 update requests per windowMs
+});
+
 // model
 let StudentModel = require('../models/Student');
 studentRoute.route('/create-student').post((req, res, next) => {
@@ -43,7 +48,7 @@ studentRoute.route('/edit-student/:id').get((req, res, next) => {
   })
 })
 // Update
-studentRoute.route('/update-student/:id').put((req, res, next) => {
+studentRoute.route('/update-student/:id').put(updateStudentLimiter, (req, res, next) => {
   // Only allow specific fields to be updated to prevent injection of MongoDB operators
   const allowedUpdateFields = ['name', 'email', 'age']; // adjust this list to match Student schema
   const updateData = {};
