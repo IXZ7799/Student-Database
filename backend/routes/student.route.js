@@ -1,5 +1,13 @@
 const express = require('express');
 const studentRoute = express.Router();
+// rate limiting
+const RateLimit = require('express-rate-limit');
+
+const deleteStudentLimiter = RateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 delete requests per windowMs
+});
+
 // model
 let StudentModel = require('../models/Student');
 studentRoute.route('/create-student').post((req, res, next) => {
@@ -43,7 +51,7 @@ studentRoute.route('/update-student/:id').put((req, res, next) => {
   })
 })
 // Delete
-studentRoute.route('/delete-student/:id').delete((req, res, next) => {
+studentRoute.route('/delete-student/:id').delete(deleteStudentLimiter, (req, res, next) => {
   StudentModel.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error);
